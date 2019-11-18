@@ -91,7 +91,8 @@ int bloom_init(struct bloom * bloom, int entries, double error)
 
   bloom->ready = 0;
 
-  if (entries < 6 || error == 0) {
+  // semplicemente devi usare un numero molto alto di elementi da inserire
+  if (entries < 1000 || error == 0) {
 
     return 1;
   }

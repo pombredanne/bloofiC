@@ -4,15 +4,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/BLOOFI.c \
+../src/TestBloomFilter.c \
 ../src/bloom.c 
 
 OBJS += \
-./src/BLOOFI.o \
+./src/TestBloomFilter.o \
 ./src/bloom.o 
 
 C_DEPS += \
-./src/BLOOFI.d \
+./src/TestBloomFilter.d \
 ./src/bloom.d 
 
 
