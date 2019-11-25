@@ -29,7 +29,8 @@ struct bloom
   int bits;
   int bytes;
   int hashes;
-
+  int id;
+ // static int lastID;
   // Fields below are private to the implementation. These may go away or
   // change incompatibly at any moment. Client code MUST NOT access or rely
   // on these.

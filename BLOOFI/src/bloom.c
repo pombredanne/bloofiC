@@ -26,7 +26,7 @@
 #define MAKESTRING(n) STRING(n)
 #define STRING(n) #n
 
-
+int lastID=0;
 inline static int test_bit_set_bit(unsigned char * buf,
                                    unsigned int x, int set_bit)
 {
@@ -96,7 +96,8 @@ int bloom_init(struct bloom * bloom, int entries, double error)
 
     return 1;
   }
-
+  lastID++;
+  bloom->id=lastID;
   bloom->entries = entries;
   bloom->error = error;
 
