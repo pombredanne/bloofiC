@@ -7,8 +7,8 @@
 
 #include <stdbool.h>
 #include "lista.h"
-#include "BFINode.h"
-//#include "hashtable.h"
+//#include "BFINode.h"
+#include "hashtable.h"
 //#include "listaBFINode.h"
 #ifndef _BLOOFI_H
 #define _BLOOFI_H
@@ -23,7 +23,7 @@ struct bloofi
   int order;
   bool splitFull;
   list bfList;
-  //hashtable_t *idMap;
+  struct DataItem *idMap;
   struct BFINode *root;
 };
 
@@ -34,9 +34,10 @@ int deleteFromIndex(struct bloofi* bl,int id);
 void deleteNode(struct bloofi *bl,struct BFINode *childNode);
 //void redistribute(struct BFINode node,struct BFINode sibling,bool isRightSibling);
 //void merge(struct BFINode node,struct BFINode sibling,bool isRightSibling);
-//list bulkload(list mbfList);
+//list bulkload(struct bloofi *bl,list mbfList);
 //list searchBloomFilters(const void *buf);
-
+void insertBloomFilter(struct bloofi *bl,struct bloom *b);
+//void insert2(struct bloofi *bl,struct BFINode *current,struct BFINode *newChild);
 #ifdef __cplusplus
 }
 #endif

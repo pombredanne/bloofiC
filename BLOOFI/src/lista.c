@@ -4,7 +4,7 @@
 
 void newList(list*l){
 	*l=NULL;
-	printf("ciao\n");
+	//printf("ciao\n");
 
 }
 
@@ -33,7 +33,7 @@ void VisualizzaElementoLista(struct bloom *x){
 }
 
 list insertList(list l,struct bloom *x){
-printf("Entro nella insert\n");
+//printf("Entro nella insert\n");
 	struct node *temp;
 	list p;
 	p=l;
