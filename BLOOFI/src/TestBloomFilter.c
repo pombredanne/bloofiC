@@ -17,7 +17,6 @@
 #include "bloom.h"
 #include "bloofi.h"
 //#include "hashtable.h"
-
 int main(void) {
 
 //	struct bloom bf;
@@ -45,6 +44,7 @@ int main(void) {
 	//printf("Risultato5:%d\n",bloom_check(&bf,"Cane",4));
 	/*****************************************************/
 
+
 	struct bloom b;
 	struct bloom b1;
 	struct bloom b2;
@@ -52,36 +52,98 @@ int main(void) {
 	struct bloom b4;
 	struct bloom b5;
 	struct bloofi bl;
-	bloom_init(&b,88099, 0.5f);
-	bloom_init(&b1,78099, 0.5f);
-	bloom_init(&b2,48099, 0.5f);
-	bloom_init(&b3,68099, 0.5f);
-	bloom_init(&b4,18099, 0.5f);
-	bloom_init(&b5,28099, 0.5f);
-	bloom_add(&b1, "Cane",4);
-	bloom_add(&b2, "Gatto",5);
-	bloom_add(&b3, "Mela",4);
-	bloom_add(&b4, "Pera",4);
-	//bloom_add(&b4, "Siiii",5);
-	//bloom_add(&b4, "Cia",3);
-	//bloom_add(&b4, "Mamma",5);
-	bloom_add(&b5, "Banana",6);
-	struct BFINode *bfi=BFINode(&b,5,true);
-	struct BFINode *bfi1=BFINode(&b1,15,true);
-	struct BFINode *bf2=BFINode(&b2,25,true);
-	struct BFINode *bf3=BFINode(&b3,35,true);
-	struct BFINode *bf4=BFINode(&b4,45,true);
-	struct BFINode *bf5=BFINode(&b5,55,true);
-	or_bloom_filter(&b,&b4);
-	//or_bloom_filter(&b,&b2);
-	//or_bloom_filter(&b1,&b3);
-	//or_bloom_filter(&b1,&b4);
-	//or_bloom_filter(&b2,&b5);
-	list l=findMatches(bfi,"Pera");
-	VisitList(l);
-	printf("%d\n",bloom_check(&b,"Pera",4));
-	//bloom_filter_index(&bl,5,b,true);
+	//è fondamentale che per eseguire operazioni abbiano lo stesso
+	//entries i bloom filter
+	//bloom_init(&b,10000, 0.5f);
+//	bloom_init(&b2,10000, 0.5f);
+//	bloom_init(&b3,10000, 0.5f);
+//	bloom_init(&b4,10000, 0.5f);
+//	bloom_init(&b5,10000, 0.5f);
+	bloom_filter_index(&bl,2,&b,true);
+	printf("ID_ROOT:%d\n",bl.root->value->id);
+	bloom_init(&b1,10000, 0.5f);
+	bloom_init(&b2,10000, 0.5f);
+	bloom_init(&b3,10000, 0.5f);
+	bloom_init(&b4,10000, 0.5f);
+	bloom_init(&b5,10000, 0.5f);
+	//bloom_add(&b1, "Cane",4);
+	//bloom_add(&b2, "Gatto",5);
+	//bloom_add(&b3, "Mela",4);
+	insertBloomFilter(&bl,&b1);
+	insertBloomFilter(&bl,&b2);
+	insertBloomFilter(&bl,&b3);
+	insertBloomFilter(&bl,&b4);
+	printf("HO INSERITO IL QUARTO ELEMENTO\n");
+	insertBloomFilter(&bl,&b5);
+	//VisitList2(bl.root->children);
+	//printf("ID1:%d\n",getElement2(bl.root->children,0)->value->id);
+	//printf("ID2:%d\n",getElement2(bl.root->children,1)->value->id);
+	//printf("ID3:%d\n",getElement2(bl.root->children,2)->value->id);
+	//printf("ID4:%d\n",getElement2(bl.root->children,3)->value->id);
+	//updateIndex(&bl,&b4);
+	//bloom_print_supreme(&b2);
+	//printf("ID b:%d\n",b.id);
+	//printf("ID b1:%d\n",b1.id);
+	//printf("ID b2:%d\n",b2.id);
+	//printf("ID b3:%d\n",b3.id);
+	//printf("ID b4:%d\n",b4.id);
+	//printf("ID b5:%d\n",b5.id);
+
+	//bloom_add(&b4, "Pera",4);
+	//bloom_add(&b5, "Banana",6);
 	//insertBloomFilter(&bl,&b2);
+	//struct BFINode *bfi=BFINode(&b,5,true);
+	//struct BFINode *bfi1=BFINode(&b1,5,true);
+	//struct BFINode *bfi2=BFINode(&b2,5,true);
+	//struct BFINode *bfi3=BFINode(&b3,5,true);
+	//struct BFINode *bfi4=BFINode(&b4,5,true);
+	//struct BFINode *bfi5=BFINode(&b5,5,true);
+	//bfi->children=insertList2(bfi->children,bfi1);
+	//bfi->children=insertList2(bfi->children,bfi2);
+	//bfi1->parent=bfi;
+	//bfi2->parent=bfi;
+	//bfi1->children=insertList2(bfi->children,bfi3);
+	//bfi1->children=insertList2(bfi->children,bfi4);
+	//bfi3->parent=bfi1;
+	//bfi4->parent=bfi1;
+	//bfi2->children=insertList2(bfi2->children,bfi5);
+	//bfi5->parent=bfi2;
+
+	//or_bloom_filter(&b2,&b5);
+	//or_bloom_filter(&b1,&b4);
+	//or_bloom_filter(&b1,&b3);
+	//or_bloom_filter(&b,&b1);
+	//or_bloom_filter(&b,&b2);
+
+
+
+	//bloom_print_supreme(bfi->value);
+	//list l=findMatches(bfi,"Pera");
+	//struct bloom *bloom1=getElement(l,0);
+	//struct bloom *bloom2=getElement(l,1);
+	//printf("ID bloom1:%d\n",bloom1->id);
+	//printf("ID bloom2:%d\n",bloom2->id);
+	//VisitList(l);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//printf("%d\n",bloom_check(&b,"Pera",4));
 	//insertBloomFilter(&bl,&b3);
 	//list lista;
 	//list lista2;

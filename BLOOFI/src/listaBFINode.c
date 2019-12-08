@@ -80,6 +80,7 @@ if(p->next==NULL){
 		printf(":%d\n",p->bf->order);
 		//return p->bf;
 		temp=BFINode(p->bf->value,p->bf->order,p->bf->splitFull);
+		temp->parent=p->bf->parent;
 		//printf("Order temp:%d\n",temp->order);
 		return temp;
 	}
@@ -90,6 +91,7 @@ printf("ci sono più elementiiii\n");
 while(p->next!=NULL){
 	if(conta==index){
 		temp=BFINode(p->bf->value,p->bf->order,p->bf->splitFull);
+		temp->parent=p->bf->parent;
 		return temp;
 		//return p->bf;
 	}
@@ -258,4 +260,26 @@ int GetSize2(listBFINode l){
 	}
 	return conta+1;
 }
+
+listBFINode removeLastHalf(listBFINode l,int from){
+
+	listBFINode p;
+	p=l;
+	int count=0;
+	while(p->next!=NULL){
+		if(count+1==from){
+			p->next=NULL;
+			break;
+		}
+	p=p->next;
+	count++;
+	printf("This is count:%d\n",count);
+	}
+	return l;
+}
+
+
+
+
+
 

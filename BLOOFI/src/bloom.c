@@ -15,10 +15,12 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <limits.h>
 
 #include "bloom.h"
 #include "murmur2/murmurhash2.h"
@@ -27,6 +29,7 @@
 #define STRING(n) #n
 
 int lastID=0;
+//corrisponde alla contains del BloomFilter in Java
 inline static int test_bit_set_bit(bitset_t * buf,
                                    unsigned int x, int set_bit)
 {
@@ -114,7 +117,8 @@ int bloom_init(struct bloom * bloom, int entries, double error)
   }
 
   bloom->hashes = (int)ceil(0.693147180559945 * bloom->bpe);  // ln(2)
-  bloom->b=bitset_create();
+  //size_t capacity=(size_t)bloom->bits;
+  bloom->b=bitset_create_with_capacity(bloom->bits);
  // bloom->bf = (unsigned char *)calloc(bloom->bytes, sizeof(unsigned char));
   if (bloom->b == NULL) {                                   // LCOV_EXCL_START
     return 1;
@@ -148,6 +152,26 @@ void bloom_print(struct bloom * bloom)
   printf(" ->bytes = %d\n", bloom->bytes);
   printf(" ->hash functions = %d\n", bloom->hashes);
 }
+void print_bin(uint64_t integer)
+{
+
+    int i = CHAR_BIT * sizeof integer; /* however many bits are in an integer */
+    while(i--) {
+        putchar('0' + ((integer >> i) & 1));
+    }
+}
+
+void bloom_print_supreme(struct bloom *bloom){
+
+for(int i=0;i<bloom->b->arraysize;i++){
+	printf("[%d]|",i);
+	print_bin(bloom->b->array[i]);
+	printf("|");
+	if(i%2==0)
+		printf("\n");
+}
+
+}
 
 
 void bloom_free(struct bloom * bloom)
@@ -170,22 +194,24 @@ int bloom_reset(struct bloom * bloom)
 }
 
 void or_bloom_filter(struct bloom * bloom,struct bloom * filter){
-
+	//printf("PrimoID:%d\n",bloom->id);
+	//printf("SecondoID:%d\n",filter->id);
 	bitset_inplace_union(bloom->b,filter->b);
 	bloom->numberOffElement+=filter->numberOffElement;
 }
 
 int computeHammingDistance(struct bloom * bloom,struct bloom *filter){
-	//ci sta un problema nella bitset....
-	//bitset_print(bloom->b);
-	//bitset_print(filter->b);
-	//return bitset_difference_count(bloom->b,filter->b);
-	return 0;
+	printf("Sono in Hamming\n");
+	printf("ID1:%d\n",bloom->id);
+	printf("ID2:%d\n",filter->id);
+	int x= xorcardinality(bloom->b,filter->b);
+	printf("Valore distanza Hamming:%d\n",x);
+	return x;
 }
 
-bool isFull(struct bloom *bloom){
-
-	return bitset_count(bloom->b)==bloom->bits;
+int isFull(struct bloom *bloom){
+	printf("\n%d/%d\n",cardinality(bloom->b),bloom->bits);
+	return cardinality(bloom->b)==bloom->bits;
 }
 
 const char * bloom_version()

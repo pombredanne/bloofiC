@@ -6,8 +6,6 @@ struct BFINode* BFINode(struct bloom *value,int order,bool splitFull){
 	struct BFINode *b;
 	b=malloc(sizeof(struct BFINode));
 	b->order=order;
-	//printf("Order 1:%d\n",b->order);
-	//printf("Order 2:%d\n",b->order);
 	b->value=value;
 	b->parent=NULL;
 	b->splitFull=splitFull;
@@ -49,11 +47,15 @@ int getBloomFilterSize(struct BFINode *bfn){
 }
 
 void recomputeValue(struct BFINode *bfn){
+	printf("Eccomi nella recompute\n");
 	bloom_free(bfn->value);
 	struct BFINode *currentNode;
 	for(int i=0;i<GetSize2(bfn->children);i++){
 		currentNode=getElement2(bfn->children,i);
+		printf("ID bfn node:%d\n",bfn->value->id);
+		printf("ID current node:%d\n",currentNode->value->id);
 		or_bloom_filter(bfn->value,currentNode->value);
+		printf("Dopo l OR\n");
 	}
 }
 
@@ -76,14 +78,16 @@ bool canRedistribute(struct BFINode *bfn){
 }
 
 int findClosestIndex(struct BFINode *b,listBFINode nodeList){
-
+	printf("Sono nella findClosestIndex\n");
 	if(EmptyList2(nodeList))
 		return -1;
 	struct BFINode *currentNode;
 	currentNode=getElement2(nodeList,0);
 	//ci sta un problema nella computeHammingDistance
+	printf("ID_valoreB:%d\n",b->value->id);
+	printf("ID_valoreCurrentNode:%d\n",currentNode->value->id);
 	double minDistance=computeHammingDistance(b->value,currentNode->value);
-	printf("flag1\n");
+	printf("minDistance:%f\n",minDistance);
     int minIndex=0;
     double currentDistance;
     for(int i=1;i<GetSize2(nodeList);i++){
@@ -101,6 +105,8 @@ int findClosestIndex(struct BFINode *b,listBFINode nodeList){
 
 struct BFINode* findClosest(struct BFINode *bfn,listBFINode nodeList){
 	//problema nella findClosestIndex
+	printf("Sono nella find closest\n");
+	printf("IDNellaIndex:%d\n",bfn->value->id);
 	int index=findClosestIndex(bfn,nodeList);
 	if(index>=0){
 		return getElement2(nodeList,index);

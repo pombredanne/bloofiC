@@ -36,6 +36,24 @@ bitset_t *bitset_create_with_capacity( size_t size ) {
   return bitset;
 }
 
+//ritorna il numero di bit settati ad 1
+int cardinality(bitset_t *bitSet){
+	int sum=0;
+	for(int i=0;i<bitSet->arraysize;i++){
+		sum+=__builtin_popcountll(bitSet->array[i]);
+	}
+	return sum;
+}
+
+int xorcardinality(bitset_t *bs,bitset_t *bsOther){
+	printf("Sono nella XorCardinality\n");
+	int sum=0;
+	for(int k=0;k<bs->arraysize;k++){
+		sum+=__builtin_popcountll(bs->array[k]^bsOther->array[k]);
+	}
+	return sum;
+}
+
 /* Create a copy */
 bitset_t *bitset_copy( const bitset_t * bitset ) {
   bitset_t *copy = NULL;
@@ -158,9 +176,7 @@ size_t bitset_count(const bitset_t *bitset) {
 
 bool bitset_inplace_union(bitset_t * restrict b1, const bitset_t * restrict b2) {
   size_t minlength = b1->arraysize < b2->arraysize ? b1->arraysize : b2->arraysize;
-  printf("K=%zu\n",b2->arraysize);
-  //minlength=2;
-  bitset_print(b2);
+
   for(size_t k = 0 ; k < minlength; ++k) {
     b1->array[k] |= b2->array[k];
   }
@@ -320,14 +336,11 @@ size_t  bitset_difference_count(const bitset_t *restrict b1, const bitset_t * re
   size_t minlength = b1->arraysize < b2->arraysize ? b1->arraysize : b2->arraysize;
   size_t k = 0;
   size_t answer = 0;
-  printf("Minlength:%lu\n",minlength);
   for( ; k < minlength; ++k) {
     answer += __builtin_popcountll (b1->array[k] & ~ (b2->array[k]));
   }
   for( ; k < b1->arraysize ; ++k) {
-	  printf("flag1\n");
     answer += __builtin_popcountll (b1->array[k]);
-    printf("answer:%lu",answer);
   }
   return answer;
 }

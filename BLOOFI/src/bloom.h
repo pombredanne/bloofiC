@@ -80,6 +80,9 @@ int bloom_init_size(struct bloom * bloom, int entries, double error,
                     unsigned int cache_size);
 
 
+void print_bin(uint64_t integer);
+
+void bloom_print_supreme(struct bloom *bloom);
 /** ***************************************************************************
  * Check if the given element is in the bloom filter. Remember this may
  * return false positive if a collision occurred.
@@ -147,7 +150,7 @@ void or_bloom_filter(struct bloom * bloom,struct bloom * filter);
 
 int computeHammingDistance(struct bloom * bloom,struct bloom *filter);
 
-bool isFull(struct bloom *bloom);
+int isFull(struct bloom *bloom);
 
 /** ***************************************************************************
  * Erase internal storage.

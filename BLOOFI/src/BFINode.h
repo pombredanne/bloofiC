@@ -28,7 +28,7 @@ struct BFINode* getElement2(listBFINode l,int index);
 int GetSize2(listBFINode l);
 listBFINode insertList2ByIndex(listBFINode l,int index,struct BFINode *newChild);
 int indexOfElement2(listBFINode l,struct BFINode *bfn);
-
+listBFINode removeLastHalf(listBFINode l,int from);
 
 struct BFINode{
 	struct bloom *value;

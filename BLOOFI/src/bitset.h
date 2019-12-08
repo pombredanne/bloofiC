@@ -17,6 +17,10 @@ struct bitset_s {
 
 typedef struct bitset_s bitset_t;
 
+int cardinality(bitset_t *bitSet);
+
+int xorcardinality(bitset_t *bs,bitset_t *bsOther);
+
 /* Create a new bitset. Return NULL in case of failure. */
 bitset_t *bitset_create( void );
 
