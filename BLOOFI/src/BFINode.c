@@ -22,7 +22,7 @@ int getLevel(struct BFINode *bfn){
 	if(isLeaf(bfn)){
 		return 0;
 	}else{
-		struct BFINode *child=getElement2(bfn->children,0);
+		struct BFINode *child=getElement(bfn->children,0);
 		int childLevel=getLevel(child);
 		return 1+childLevel;
 	}
@@ -34,8 +34,8 @@ int getTreeSize(struct BFINode *bfn){
 		return 1;
 	}else{
 		int size=1;
-		for(int i=0;i<GetSize2(bfn->children);i++){
-			currentNode=getElement2(bfn->children,i);
+		for(int i=0;i<getSize(bfn->children);i++){
+			currentNode=getElement(bfn->children,i);
 			size+=getTreeSize(currentNode);
 		}
 		return size;
@@ -47,69 +47,60 @@ int getBloomFilterSize(struct BFINode *bfn){
 }
 
 void recomputeValue(struct BFINode *bfn){
-	printf("Eccomi nella recompute\n");
-	bloom_free(bfn->value);
+	printf("Sono nella recomputeValue\n");
+	bloom_clear(bfn->value);
 	struct BFINode *currentNode;
-	for(int i=0;i<GetSize2(bfn->children);i++){
-		currentNode=getElement2(bfn->children,i);
-		printf("ID bfn node:%d\n",bfn->value->id);
-		printf("ID current node:%d\n",currentNode->value->id);
+	for(int i=0;i<getSize(bfn->children);i++){
+		currentNode=getElement(bfn->children,i);
 		or_bloom_filter(bfn->value,currentNode->value);
-		printf("Dopo l OR\n");
+
 	}
 }
 
 bool needSplit(struct BFINode *bfn){
 	if(bfn->splitFull){
-		return !(bfn->children==NULL||GetSize2(bfn->children)<=2*bfn->order);
+		return !(bfn->children==NULL||getSize(bfn->children)<=2*bfn->order);
 	}else{
-		return !(bfn->children==NULL||GetSize2(bfn->children)<=2*bfn->order||isFull(bfn->value));
+		return !(bfn->children==NULL||getSize(bfn->children)<=2*bfn->order||isFull(bfn->value));
 	}
 }
 
 bool needMerge(struct BFINode *bfn){
 
-	return bfn->parent!=NULL && GetSize2(bfn->children)<bfn->order;
+	return bfn->parent!=NULL && getSize(bfn->children)<bfn->order;
 }
 
 bool canRedistribute(struct BFINode *bfn){
 
-	return GetSize2(bfn->children)>bfn->order;
+	return getSize(bfn->children)>bfn->order;
 }
 
-int findClosestIndex(struct BFINode *b,listBFINode nodeList){
-	printf("Sono nella findClosestIndex\n");
-	if(EmptyList2(nodeList))
+int findClosestIndex(struct BFINode *b,list nodeList){
+
+	if(isEmptyList(nodeList))
 		return -1;
 	struct BFINode *currentNode;
-	currentNode=getElement2(nodeList,0);
-	//ci sta un problema nella computeHammingDistance
-	printf("ID_valoreB:%d\n",b->value->id);
-	printf("ID_valoreCurrentNode:%d\n",currentNode->value->id);
+	currentNode=getElement(nodeList,0);
 	double minDistance=computeHammingDistance(b->value,currentNode->value);
-	printf("minDistance:%f\n",minDistance);
     int minIndex=0;
     double currentDistance;
-    for(int i=1;i<GetSize2(nodeList);i++){
-    	currentNode=getElement2(nodeList,i);
+    for(int i=1;i<getSize(nodeList);i++){
+    	currentNode=getElement(nodeList,i);
     	currentDistance=computeHammingDistance(b->value,currentNode->value);
     	srand(time(NULL));
-    	if(currentDistance<minDistance||(minDistance-currentDistance<0.00001&&rand()<1.0/GetSize2(nodeList))){
+    	if(currentDistance<minDistance||(minDistance-currentDistance<0.00001&&rand()<1.0/getSize(nodeList))){
     		minDistance=currentDistance;
     		minIndex=i;
     	}
     }
-    printf("mindIndex:%d\n",minIndex);
     return minIndex;
 }
 
-struct BFINode* findClosest(struct BFINode *bfn,listBFINode nodeList){
-	//problema nella findClosestIndex
-	printf("Sono nella find closest\n");
-	printf("IDNellaIndex:%d\n",bfn->value->id);
+struct BFINode* findClosest(struct BFINode *bfn,list nodeList){
+
 	int index=findClosestIndex(bfn,nodeList);
 	if(index>=0){
-		return getElement2(nodeList,index);
+		return getElement(nodeList,index);
 	}
 	else{
 		return NULL;

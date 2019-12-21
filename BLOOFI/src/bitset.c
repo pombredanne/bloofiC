@@ -19,6 +19,12 @@ bitset_t *bitset_create() {
   return bitset;
 }
 
+//void bitset_clear(bitset_t *b){
+	//for(int i=0;i<b->arraysize;i++){
+		//b->array[i]=0;
+	//}
+//}
+
 /* Create a new bitset able to contain size bits. Return NULL in case of failure. */
 bitset_t *bitset_create_with_capacity( size_t size ) {
   bitset_t *bitset = NULL;
@@ -46,13 +52,36 @@ int cardinality(bitset_t *bitSet){
 }
 
 int xorcardinality(bitset_t *bs,bitset_t *bsOther){
-	printf("Sono nella XorCardinality\n");
+
 	int sum=0;
 	for(int k=0;k<bs->arraysize;k++){
 		sum+=__builtin_popcountll(bs->array[k]^bsOther->array[k]);
 	}
 	return sum;
 }
+
+int andCardinality(bitset_t *bs,bitset_t *bsOther){
+
+	if(bs->arraysize!=bsOther->arraysize)
+		printf("Incompatibili\n");
+	int sum = 0;
+	for(int k=0;k<bs->arraysize;++k){
+		sum+=__builtin_popcountll(bs->array[k] && bsOther->array[k]);
+	}
+	return sum;
+}
+
+int orCardinality(bitset_t *bs,bitset_t *bsOther){
+
+	if(bs->arraysize != bsOther->arraysize)
+		printf("Incompatibili\n");
+	int sum = 0;
+	for(int k = 0;k < bs->arraysize;++k){
+		sum+=__builtin_popcountll(bs->array[k] || bsOther->array[k]);
+	}
+	return sum;
+}
+
 
 /* Create a copy */
 bitset_t *bitset_copy( const bitset_t * bitset ) {

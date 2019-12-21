@@ -1,11 +1,11 @@
 #include "hashtable.h"
 
 int hashCode(int key) {
-	printf("Modulo:%d\n",key%SIZE);
+
    return key % SIZE;
 }
 
-struct BFINode *search(struct DataItem** hashArray,int key){
+struct BFINode *searchHash(struct DataItem** hashArray,int key){
    //get the hash
    int hashIndex = hashCode(key);
 	//int hashIndex=1;
@@ -17,7 +17,7 @@ struct BFINode *search(struct DataItem** hashArray,int key){
       if(hashArray[hashIndex]->key == key)
          return hashArray[hashIndex]->data;
 
-     // printf("Prossima cella\n");
+
       //go to next cell
       ++hashIndex;
 
@@ -36,7 +36,6 @@ void insert(struct DataItem** hashArray,int key,struct BFINode* data) {
 
    //get the hash
    int hashIndex = hashCode(key);
-   printf("hashIndex:%d\n",hashIndex);
    //move in array until an empty or deleted cell
    while(hashArray[hashIndex] != NULL && hashArray[hashIndex]->key != -1) {
       //go to next cell
@@ -52,16 +51,12 @@ void insert(struct DataItem** hashArray,int key,struct BFINode* data) {
 
 void delete(struct DataItem** hashArray,int key) {
   // int key = item->key;
-   printf("key:%d\n",key);
    //get the hash
    int hashIndex = hashCode(key);
-   printf("%d\n",hashIndex);
    //move in array until an empty
    while(hashArray[hashIndex] != NULL) {
       if(hashArray[hashIndex]->key == key) {
-    	  printf("qui\n");
         // struct DataItem* temp = hashArray[hashIndex];
-         printf("cancellazione...");
          //assign a dummy item at deleted position
          hashArray[hashIndex] = NULL;
          //return temp;

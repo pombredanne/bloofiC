@@ -17,7 +17,7 @@ struct DataItem* item;
 
 int hashCode(int key);
 
-struct BFINode *search(struct DataItem** hashArray,int key);
+struct BFINode *searchHash(struct DataItem** hashArray,int key);
 
 void insert(struct DataItem** hashArray,int key,struct BFINode* data);
 

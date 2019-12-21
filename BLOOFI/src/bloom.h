@@ -39,6 +39,7 @@ struct bloom
   //unsigned char * bf;
   int ready;
   int numberOffElement;
+  int metric;
 };
 
 
@@ -150,7 +151,15 @@ void or_bloom_filter(struct bloom * bloom,struct bloom * filter);
 
 int computeHammingDistance(struct bloom * bloom,struct bloom *filter);
 
+double computeJaccardDistance(struct bloom *bloom,struct bloom *filter);
+
+double computeCosineDistance(struct bloom *bloom,struct bloom *filter);
+
 int isFull(struct bloom *bloom);
+
+void bloom_clear(struct bloom * bloom);
+
+double computeDistance(struct bloom *bloom,struct bloom *filter);
 
 /** ***************************************************************************
  * Erase internal storage.

@@ -21,11 +21,17 @@ int cardinality(bitset_t *bitSet);
 
 int xorcardinality(bitset_t *bs,bitset_t *bsOther);
 
+//void bitset_clear(bitset_t *b);
+
 /* Create a new bitset. Return NULL in case of failure. */
 bitset_t *bitset_create( void );
 
 /* Create a new bitset able to contain size bits. Return NULL in case of failure. */
 bitset_t *bitset_create_with_capacity( size_t size );
+
+int andCardinality(bitset_t *bs,bitset_t *bsOther);
+
+int orCardinality(bitset_t *bs,bitset_t *bsOther);
 
 /* Free memory. */
 void bitset_free(bitset_t *bitset);

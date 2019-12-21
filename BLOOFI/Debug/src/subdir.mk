@@ -10,8 +10,7 @@ C_SRCS += \
 ../src/bloofi.c \
 ../src/bloom.c \
 ../src/hashtable.c \
-../src/lista.c \
-../src/listaBFINode.c 
+../src/list.c 
 
 OBJS += \
 ./src/BFINode.o \
@@ -20,8 +19,7 @@ OBJS += \
 ./src/bloofi.o \
 ./src/bloom.o \
 ./src/hashtable.o \
-./src/lista.o \
-./src/listaBFINode.o 
+./src/list.o 
 
 C_DEPS += \
 ./src/BFINode.d \
@@ -30,8 +28,7 @@ C_DEPS += \
 ./src/bloofi.d \
 ./src/bloom.d \
 ./src/hashtable.d \
-./src/lista.d \
-./src/listaBFINode.d 
+./src/list.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

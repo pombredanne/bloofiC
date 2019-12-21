@@ -16,114 +16,137 @@
 #include <stdbool.h>
 #include "bloom.h"
 #include "bloofi.h"
-//#include "hashtable.h"
+#include "time.h"
+//#include "list.h"
 int main(void) {
 
-//	struct bloom bf;
-	//int numLettereDaInserire = 10;
-	//char *lettereDaInserire = "Telecinesi";
-	//char *lettereDaControllare= "Telecinesi";
-
-	//puts("Testiamo il bloofi ;)");
-
-
-	// piu vuoi stare sicuro di non avere collisioni(probabilità tende a zero)e ti crea un array piu grande(elevato numero di bit)
-//	bloom_init(&bf,88099, 0.99f);
-	//bloom_add(&bf, lettereDaInserire, numLettereDaInserire);
-	//bloom_print(&bf);
-	//printf("Risultato1:%d\n",bloom_check(&bf,lettereDaControllare,10));
-
-	//bloom_add(&bf,"Idrolisi",8);
-	//printf("Risultato2:%d\n",bloom_check(&bf,lettereDaControllare,10));
-
-//	printf("Risultato3:%d\n",bloom_check(&bf,"Idrolisi",8));
-
-//	printf("Risultato4:%d\n",bloom_check(&bf,"Cane",4));
-
-	//bloom_add(&bf, "Cane",4);
-	//printf("Risultato5:%d\n",bloom_check(&bf,"Cane",4));
-	/*****************************************************/
-
-
-	struct bloom b;
-	struct bloom b1;
-	struct bloom b2;
-	struct bloom b3;
-	struct bloom b4;
-	struct bloom b5;
-	struct bloofi bl;
-	//è fondamentale che per eseguire operazioni abbiano lo stesso
-	//entries i bloom filter
-	//bloom_init(&b,10000, 0.5f);
-//	bloom_init(&b2,10000, 0.5f);
-//	bloom_init(&b3,10000, 0.5f);
-//	bloom_init(&b4,10000, 0.5f);
-//	bloom_init(&b5,10000, 0.5f);
-	bloom_filter_index(&bl,2,&b,true);
-	printf("ID_ROOT:%d\n",bl.root->value->id);
-	bloom_init(&b1,10000, 0.5f);
-	bloom_init(&b2,10000, 0.5f);
-	bloom_init(&b3,10000, 0.5f);
-	bloom_init(&b4,10000, 0.5f);
-	bloom_init(&b5,10000, 0.5f);
-	//bloom_add(&b1, "Cane",4);
-	//bloom_add(&b2, "Gatto",5);
-	//bloom_add(&b3, "Mela",4);
-	insertBloomFilter(&bl,&b1);
-	insertBloomFilter(&bl,&b2);
-	insertBloomFilter(&bl,&b3);
-	insertBloomFilter(&bl,&b4);
-	printf("HO INSERITO IL QUARTO ELEMENTO\n");
-	insertBloomFilter(&bl,&b5);
-	//VisitList2(bl.root->children);
-	//printf("ID1:%d\n",getElement2(bl.root->children,0)->value->id);
-	//printf("ID2:%d\n",getElement2(bl.root->children,1)->value->id);
-	//printf("ID3:%d\n",getElement2(bl.root->children,2)->value->id);
-	//printf("ID4:%d\n",getElement2(bl.root->children,3)->value->id);
-	//updateIndex(&bl,&b4);
-	//bloom_print_supreme(&b2);
-	//printf("ID b:%d\n",b.id);
-	//printf("ID b1:%d\n",b1.id);
-	//printf("ID b2:%d\n",b2.id);
-	//printf("ID b3:%d\n",b3.id);
-	//printf("ID b4:%d\n",b4.id);
-	//printf("ID b5:%d\n",b5.id);
-
-	//bloom_add(&b4, "Pera",4);
-	//bloom_add(&b5, "Banana",6);
-	//insertBloomFilter(&bl,&b2);
-	//struct BFINode *bfi=BFINode(&b,5,true);
-	//struct BFINode *bfi1=BFINode(&b1,5,true);
-	//struct BFINode *bfi2=BFINode(&b2,5,true);
-	//struct BFINode *bfi3=BFINode(&b3,5,true);
-	//struct BFINode *bfi4=BFINode(&b4,5,true);
-	//struct BFINode *bfi5=BFINode(&b5,5,true);
-	//bfi->children=insertList2(bfi->children,bfi1);
-	//bfi->children=insertList2(bfi->children,bfi2);
-	//bfi1->parent=bfi;
-	//bfi2->parent=bfi;
-	//bfi1->children=insertList2(bfi->children,bfi3);
-	//bfi1->children=insertList2(bfi->children,bfi4);
-	//bfi3->parent=bfi1;
-	//bfi4->parent=bfi1;
-	//bfi2->children=insertList2(bfi2->children,bfi5);
-	//bfi5->parent=bfi2;
-
-	//or_bloom_filter(&b2,&b5);
-	//or_bloom_filter(&b1,&b4);
-	//or_bloom_filter(&b1,&b3);
-	//or_bloom_filter(&b,&b1);
-	//or_bloom_filter(&b,&b2);
 
 
 
-	//bloom_print_supreme(bfi->value);
-	//list l=findMatches(bfi,"Pera");
-	//struct bloom *bloom1=getElement(l,0);
-	//struct bloom *bloom2=getElement(l,1);
-	//printf("ID bloom1:%d\n",bloom1->id);
-	//printf("ID bloom2:%d\n",bloom2->id);
-	//VisitList(l);
+//listBFINode l;
+//newList2(&l);
+struct bloom bloom;
+struct bloom bloom2;
+struct bloom bloom3;
+struct bloom bloom4;
+struct bloom bloom5;
+struct bloom bloom6;
+struct bloom bloom7;
+struct bloom bloom8;
+struct bloom bloom9;
+struct bloofi bl;
+bloom_init(&bloom,10000,0.5);
+bloom_filter_index(&bl,2,&bloom,false);//radice id 2
+bloom_init(&bloom2,10000,0.5);
+bloom_init(&bloom3,10000,0.5);
+bloom_init(&bloom4,10000,0.5);
+bloom_init(&bloom5,10000,0.5);
+bloom_init(&bloom6,10000,0.5);
+bloom_init(&bloom7,10000,0.5);
+insertBloomFilter(&bl,&bloom2);//inserisco id 3
+insertBloomFilter(&bl,&bloom3);//inserisco id 4
+insertBloomFilter(&bl,&bloom4);//inserisco id 5
+insertBloomFilter(&bl,&bloom5);//inserisco id 6
+insertBloomFilter(&bl,&bloom6);//inserisco id 7
+insertBloomFilter(&bl,&bloom7);//inserisco id 8
+printf("FINE SESTO INSERIMENTO\n");
+printf("Mamma root:%d\n",bl.root->value->id);
+
+
+bloom_init(&bloom8,10000,0.5);
+insertBloomFilter(&bl,&bloom8);//inserisco id 11
+
+bloom_init(&bloom9,10000,0.5);
+insertBloomFilter(&bl,&bloom9);//inserisco id 13
+struct BFINode *mah=getElement(bl.root->children,2);
+int size2=getSize(mah->children);
+printf("DIM:%d\n",size2);
+deleteFromIndex(&bl,6);
+printf("Ultimissima size root:%d\n",getSize(bl.root->children));
+//struct BFINode *test1=getElement2(bl.root->children,2);
+//printf("id da valutare:%d\n",test1->value->id);
+
+
+struct BFINode *test1=getElement(bl.root->children,0);
+struct BFINode *test2=getElement(bl.root->children,1);
+//struct BFINode *test3=getElement2(bl.root->children,2);
+struct BFINode *test4=getElement(test1->children,0);
+struct BFINode *test5=getElement(test1->children,1);
+struct BFINode *test6=getElement(test1->children,2);
+struct BFINode *test7=getElement(test1->children,3);
+struct BFINode *test8=getElement(test2->children,0);
+struct BFINode *test9=getElement(test2->children,1);
+struct BFINode *test10=getElement(test2->children,2);
+printf("DIM1:%d\n",getSize(test1->children));
+printf("DIM2:%d\n",getSize(test2->children));
+printf("Id root:%d\n",bl.root->value->id);
+printf("Id nummber 1:%d\n",test1->value->id);
+printf("Id nummber 2:%d\n",test2->value->id);
+//printf("Id nummber 3:%d\n",test3->value->id);
+printf("Id nummber 4:%d\n",test4->value->id);
+printf("Id nummber 5:%d\n",test5->value->id);
+printf("Id nummber 6:%d\n",test6->value->id);
+printf("Id nummber 7:%d\n",test7->value->id);
+printf("Id nummber 8:%d\n",test8->value->id);
+printf("Id nummber 9:%d\n",test9->value->id);
+printf("Id nummber 10:%d\n",test10->value->id);
+
+
+
+//struct BFINode *b1=getElement2(bl.root->children,0);
+//struct BFINode *b2=getElement2(bl.root->children,1);
+//struct BFINode *b3=getElement2(bl.root->children,2);
+//struct BFINode *b4=getElement2(bl.root->children,3);
+//printf("Size:%d\n",GetSize2(bl.root->children));
+//printf("ID ROOT:%d\n",bl.root->value->id);
+//printf("ID bloom1:%d\n",b1->value->id);
+//printf("ID bloom2:%d\n",b2->value->id);
+//printf("ID bloom3:%d\n",b3->value->id);
+//printf("ID bloom4:%d\n",b4->value->id);
+
+//struct BFINode *n1=getElement2(bl.root->children,0);
+//struct BFINode *n2=getElement2(bl.root->children,1);
+//printf("ID bloom:%d\n",bloom.id);
+//printf("ID b1:%d\n",n1->value->id);
+//printf("ID b2:%d\n",n2->value->id);
+//VisitList(bl.bfList);
+
+printf("SIZE_BLOOM:%d\n",getSize(bl.bfList));
+//printf("ID BLOOM_1:%d\n",getElement(bl.bfList,0)->id);
+//printf("ID BLOOM_2:%d\n",getElement(bl.bfList,1)->id);
+//printf("ID BLOOM_3:%d\n",getElement(bl.bfList,2)->id);
+//printf("ID BLOOM_4:%d\n",getElement(bl.bfList,3)->id);
+//printf("ID BLOOM_5:%d\n",getElement(bl.bfList,4)->id);
+//printf("ID BLOOM_6:%d\n",getElement(bl.bfList,5)->id);
+//printf("ID BLOOM_7:%d\n",getElement(bl.bfList,6)->id);
+//printf("ID BLOOM_8:%d\n",getElement(bl.bfList,7)->id);
+//struct BFINode *b=getElement2(bl.root->children,0);
+//printf("ID nodo rimasto:%d\n",b->value->id);
+//struct BFINode *b2=BFINode(&bloom2,2,false);
+
+
+
+printf("Test della lista generica...\n");
+
+
+/*
+listG l;
+newList3(&l);
+struct bloom *b1;
+b1=malloc(sizeof(struct bloom));
+bloom_init(b1,10000,0.5);
+struct bloom *b2;
+b2=malloc(sizeof(struct bloom));
+bloom_init(b2,10000,0.5);
+struct BFINode *node=BFINode(b1,2,false);
+struct BFINode *node2=BFINode(b2,2,false);
+l=insertList3(l,node);
+l=insertList3(l,node2);
+l=DeleteList3(l,node);
+struct BFINode *node3=getElement3(l,0);
+printf("Id del nodo inserito:%d\n",node3->value->id);
+
+*/
 
 
 
@@ -131,129 +154,5 @@ int main(void) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-	//printf("%d\n",bloom_check(&b,"Pera",4));
-	//insertBloomFilter(&bl,&b3);
-	//list lista;
-	//list lista2;
-	//newList(&lista2);
-	//newList(&lista);
-	//lista=insertList(lista,&b2);
-	//lista=insertList(lista,&b3);
-	//lista2=insertList(lista2,&b4);
-	//lista2=insertList(lista2,&b5);
-	//lista=addAll(lista,lista2);
-	//VisitList(lista);
-	//insertBloomFilter(&bl,&b2);
-	//insertBloomFilter(&bl,&b3);
-	//VisitList2(bl.root->children);
-	//updateIndex
-//	bloom_print(&b);
-	//dummyItem = (struct DataItem*) malloc(sizeof(struct DataItem));
-	//struct BFINode *bfi1=BFINode(&b2,15,true);
-	//struct BFINode *bfi2=BFINode(&b3,25,true);
-	//struct BFINode *bfi3=BFINode(&b4,35,true);
-	//struct BFINode *bfi4=BFINode(&b5,45,true);
-	//bfi1->children=insertList2(bfi1->children,bfi2);
-	//bfi1->children=insertList2(bfi1->children,bfi3);
-	//bfi2->parent=bfi1;
-	//bfi3->parent=bfi1;
-	//VisitList2(bfi1->children);
-	//VisitList2(bfi3->parent->children);
-	//struct BFINode *boh=insertEntryIntoParent(bfi4,bfi2);
-	//VisitList2(bfi1->children);
-	//bl.root->children=insertList2(bl.root->children,bfi2);
-	//int indice=indexOfElement2(bl.root->children,bfi2);
-	//printf("Indice:%d\n",indice);
-	//printf("%d\n",getTreeSize(bl.root));
-	//struct BFINode *bfi4=findClosest(bl.root,bl.root->children);
-	//printf("Order closest:%d\n",bfi4->order);
-	//struct BFINode *bfi1=BFINode(&b2,15,true);
-	//struct BFINode *bfi2=BFINode(&b3,25,true);
-	//struct BFINode *bfi3=BFINode(&b4,35,true);
-	//bl.root->children=insertList2(bl.root->children,bfi1);
-	//bl.root->children=insertList2(bl.root->children,bfi2);
-	//bl.root->children=insertList2(bl.root->children,bfi3);
-	//bl.root->children=insertList2ByIndex(bl.root->children,2,bfi3);
-	//bl.root->children=DeleteListbyIndex2(bl.root->children,2);
-	//bl.root->children=insertList2(bl.root->children,bfi3);
-	//VisitList2(bl.root->children);
-	//struct BFINode *new;
-	//new=getElement2(bl.root->children,0);
-	//bfi1->order=40;
-	//printf("This order:%d\n",new->order);
-	//printf("ORDER:%d\n",new->childr);
-	//insert(1, bfi1);
-	//display();
-	//bloom_init(&b3,28099, 0.5f);
-	//bloom_init(&b4,68099, 0.5f);
-	//BFINode(&bl,&b,15,true);
-	//printf("prima\n");
-	//list bfList;
-	//newList(&bfList);
-	//bloom_filter_index2(&bl,6,&bfList,true);
-	//printf("funzionaaaaa\n");
-	//insertBloomFilter(&bl,&b2);
-	//insertBloomFilter(&bl,&b3);
-	//VisitList2(bl.root->children);
-	//VisitList(bl.bfList);
-	  //dummyItem = (struct DataItem*) malloc(sizeof(struct DataItem));
-	   //dummyItem->data = -1;
-	   //dummyItem->key = -1;
-	   //struct BFINode bfi1;
-	   //struct BFINode bfi2;
-	  // struct BFINode bfi3;
-	  // struct BFINode *new;
-	   //BFINode(&bfi1,&b,15,true);
-	  // bfi1.children=NULL;
-	   //BFINode(&bfi2,&b2,25,true);
-	  // BFINode(&bfi3,&b3,35,true);
-
-	  //bfi1.children=insertList2(bfi1.children,&bfi2);
-	 //  bfi1.children=insertList2(bfi1.children,&bfi3);
-	  // VisitList2(bfi1.children);
-	  // insert(1, bfi1);
-	   //insert(2, bfi2);
-
-	//printf("funziona ancoraaaa\n");
-	//hashArray[20];
-	//struct bloofi bl;
-	//bloom_filter_index2(&bl,13,true);
-	//struct DataItem* hashA[SIZE]={NULL};
-	//struct bloom b;
-	//struct bloom b2;
-	//bloom_init(&b,88099, 0.5f);
-	//bloom_init(&b2,88099, 0.5f);
-	//struct BFINode *bi1=BFINode(&b,5,true);
-	//struct BFINode *bi2=BFINode(&b,10,true);
-	//struct DataItem* item1;
-	//struct DataItem* item2;
-	//item1=(struct DataItem*) malloc(sizeof(struct DataItem));
-	//item2=(struct DataItem*) malloc(sizeof(struct DataItem));
-	//item1->data=bi1;
-	//item1->key=1;
-	//item2->data=bi2;
-	//item2->key=2;
-	//insert(hashA,1,item1->data);
-	//insert(2,item2->data);
-
-	//struct BFINode *bi3=search(item1->key);
-	//printf("Order nodo:%d\n",bi3->order);
-	 //dummyItem = (struct DataItem*) malloc(sizeof(struct DataItem));
-	 //dummyItem->data = NULL;
-	 //dummyItem->key = -1;
-	//delete(bi1);
-	//display(hashA);
 	return EXIT_SUCCESS;
 }

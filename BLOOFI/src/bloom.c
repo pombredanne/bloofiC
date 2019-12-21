@@ -92,7 +92,6 @@ int bloom_init(struct bloom * bloom, int entries, double error)
 
   bloom->numberOffElement=0;
   bloom->ready = 0;
-
   // semplicemente devi usare un numero molto alto di elementi da inserire
   if (entries < 1000 || error == 0) {
 
@@ -184,6 +183,11 @@ void bloom_free(struct bloom * bloom)
   bloom->ready = 0;
 }
 
+void bloom_clear(struct bloom * bloom){
+
+	bitset_clear(bloom->b);
+
+}
 
 int bloom_reset(struct bloom * bloom)
 {
@@ -201,16 +205,59 @@ void or_bloom_filter(struct bloom * bloom,struct bloom * filter){
 }
 
 int computeHammingDistance(struct bloom * bloom,struct bloom *filter){
-	printf("Sono in Hamming\n");
-	printf("ID1:%d\n",bloom->id);
-	printf("ID2:%d\n",filter->id);
+
 	int x= xorcardinality(bloom->b,filter->b);
-	printf("Valore distanza Hamming:%d\n",x);
 	return x;
 }
 
+double computeDistance(struct bloom *bloom,struct bloom *filter){
+
+	if(bloom->metric==2)
+		return computeJaccardDistance(bloom,filter);
+	else if(bloom->metric==3)
+		return computeCosineDistance(bloom,filter);
+	return computeHammingDistance(bloom,filter);
+}
+
+double computeCosineDistance(struct bloom *bloom,struct bloom *filter){
+
+	double distance=0;
+	int maxLength=bloom->b->arraysize;
+	bitset_t *otherBitSet = filter->b;
+	if(otherBitSet->arraysize>maxLength){
+		maxLength=otherBitSet->arraysize;
+	}
+	int countAND = andCardinality(bloom->b,filter->b);
+	int count1 = cardinality(bloom->b);
+	int count2 = cardinality(bloom->b);
+
+	if(count1>0 || count2>0){
+		distance=1.0-countAND/sqrt(count1)*sqrt(count2);
+	}
+
+	return distance;
+}
+
+double computeJaccardDistance(struct bloom *bloom,struct bloom *filter){
+
+	double distance = 0;
+
+	int maxLength = bloom->b->arraysize;
+	bitset_t *otherBitSet = filter->b;
+	if(otherBitSet->arraysize > maxLength){
+		maxLength = otherBitSet->arraysize;
+	}
+	int countAND = andCardinality(bloom->b,filter->b);
+	int countOR = orCardinality(bloom->b,filter->b);
+
+	if(countOR > 0){
+		distance = 1.0 -(double)countAND/countOR;
+	}
+	return distance;
+}
+
 int isFull(struct bloom *bloom){
-	printf("\n%d/%d\n",cardinality(bloom->b),bloom->bits);
+	//printf("\n%d/%d\n",cardinality(bloom->b),bloom->bits);
 	return cardinality(bloom->b)==bloom->bits;
 }
 
